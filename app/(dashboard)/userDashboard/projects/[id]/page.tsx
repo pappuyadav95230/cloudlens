@@ -1,10 +1,11 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, TrendingUp, TrendingDown } from "lucide-react";
 import SpendingChart from "@/app/(dashboard)/_components/SpendingChart";
 import { projects, projectServiceBreakdown } from "@/app/(dashboard)/_data/mockData";
+
+export function generateStaticParams() {
+    return projects.map((p) => ({ id: p.id }));
+}
 
 const statusColors: Record<string, string> = {
     healthy: "bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400",
@@ -12,8 +13,7 @@ const statusColors: Record<string, string> = {
     critical: "bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400",
 };
 
-export default function ProjectDetailPage() {
-    const params = useParams();
+export default function ProjectDetailPage({ params }: { params: { id: string } }) {
     const project = projects.find((p) => p.id === params.id) || projects[0];
 
     const dailyLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

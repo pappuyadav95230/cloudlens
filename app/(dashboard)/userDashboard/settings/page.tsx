@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { currentUser } from "@/app/(dashboard)/_data/mockData";
+import { useState, useEffect } from "react";
 import { saveCloudAccount, checkHealthStatus } from "@/lib/api";
 import { 
     User, 
@@ -17,6 +16,7 @@ import {
     Table,
     Activity
 } from "lucide-react";
+import { auth } from "@/lib/firebase"; // Assuming firebase is initialized here
 
 export default function SettingsPage() {
     const [showConnectForm, setShowConnectForm] = useState(false);
@@ -27,6 +27,26 @@ export default function SettingsPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [backendStatus, setBackendStatus] = useState<{ type: "success" | "error" | "idle"; text: string }>({ type: "idle", text: "" });
+    
+    // Auth State
+    const [userName, setUserName] = useState("Loading...");
+    const [userEmail, setUserEmail] = useState("Loading...");
+    const [userPhoto, setUserPhoto] = useState<string | null>(null);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserName(user.displayName || "CloudLens User");
+                setUserEmail(user.email || "No email provided");
+                setUserPhoto(user.photoURL);
+            } else {
+                setUserName("Not logged in");
+                setUserEmail("Please sign in");
+                setUserPhoto(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     const handleConnect = async () => {
         if (!projectId || !datasetId || !tableName || !serviceAccountJson) {
@@ -100,12 +120,16 @@ export default function SettingsPage() {
                         </div>
                         <div className="p-6 space-y-6">
                             <div className="flex flex-col sm:flex-row items-center gap-5">
-                                <div className="w-20 h-20 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                                    <span className="text-white text-3xl font-bold">{currentUser.avatar}</span>
-                                </div>
+                                {userPhoto ? (
+                                    <img src={userPhoto} alt="Profile" className="w-20 h-20 rounded-full shadow-lg shadow-indigo-500/30 object-cover border-2 border-white dark:border-slate-800" />
+                                ) : (
+                                    <div className="w-20 h-20 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                                        <span className="text-white text-3xl font-bold">{userName.charAt(0).toUpperCase()}</span>
+                                    </div>
+                                )}
                                 <div className="text-center sm:text-left">
-                                    <p className="text-lg font-bold text-slate-900 dark:text-white">{currentUser.name}</p>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">{currentUser.email}</p>
+                                    <p className="text-lg font-bold text-slate-900 dark:text-white">{userName}</p>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400">{userEmail}</p>
                                     <button className="mt-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
                                         Change Avatar
                                     </button>
@@ -119,18 +143,21 @@ export default function SettingsPage() {
                                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Full Name</label>
                                     <input
                                         type="text"
-                                        defaultValue={currentUser.name}
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0f172a] text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                                        value={userName}
+                                        readOnly
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0f172a] text-sm text-slate-900 dark:text-white opacity-70 cursor-not-allowed"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
                                     <input
                                         type="email"
-                                        defaultValue={currentUser.email}
-                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0f172a] text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                                        value={userEmail}
+                                        readOnly
+                                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0f172a] text-sm text-slate-900 dark:text-white opacity-70 cursor-not-allowed"
                                     />
                                 </div>
+                                <p className="text-[10px] text-slate-500 text-center">Managed securely by Google Authentication</p>
                             </div>
                         </div>
                     </div>

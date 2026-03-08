@@ -35,7 +35,7 @@ export default function FAQSection() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
-        <section id="faq" className="relative bg-white dark:bg-[#1e293b] transition-colors duration-500 py-24 overflow-hidden">
+        <section id="faq" className="relative bg-slate-50 dark:bg-slate-900/50 transition-colors duration-500 py-24 overflow-hidden">
             {/* Decorative background */}
             <div className="absolute inset-0 -z-10">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full" />

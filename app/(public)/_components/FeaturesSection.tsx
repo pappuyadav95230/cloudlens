@@ -36,7 +36,7 @@ const features = [
 
 export default function FeaturesSection() {
     return (
-        <section id="features" className="bg-slate-50 dark:bg-[#0f172a] transition-colors duration-500 py-24">
+        <section id="features" className="bg-slate-50 dark:bg-slate-900/50 transition-colors duration-500 py-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <ScrollReveal>

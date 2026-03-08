@@ -98,8 +98,8 @@ export default function HeroSection() {
 
           <div className="relative bg-white dark:bg-[#1e293b] border-8 border-white dark:border-[#1e293b] rounded-3xl shadow-2xl overflow-hidden">
             <img
-              src="image/front.webp"
-              alt="Cloud Cost Dashboard"
+              src="/images/overview-preview.png"
+              alt="Cloud Cost Dashboard Overview"
               className="w-full h-auto object-cover"
             />
           </div>

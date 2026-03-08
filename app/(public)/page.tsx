@@ -1,4 +1,5 @@
 import HeroSection from "./_components/HeroSection";
+import DashboardShowcase from "./_components/DashboardShowcase";
 import FeaturesSection from "./_components/FeaturesSection";
 import TestimonialsSection from "./_components/TestimonialsSection";
 import FAQSection from "./_components/FAQSection";
@@ -8,6 +9,7 @@ export default function HomePage() {
     return (
         <div className="min-h-screen overflow-x-hidden">
             <HeroSection />
+            <DashboardShowcase />
             <FeaturesSection />
             <TestimonialsSection />
             <FAQSection />

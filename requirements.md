@@ -40,14 +40,14 @@ This document tracks the tasks and requirements that have been successfully comp
   3. **Credentials Setup**: User is prompted to upload a **Service Account JSON Key** that has read access (`BigQuery Data Viewer` and `BigQuery Job User`) to their billing export dataset.
   4. **Dataset Configuration**: User inputs the BigQuery Project ID and Dataset Name where their billing data is exported.
   5. **Validation**: The backend runs a quick `SELECT 1` or highly limited `COUNT` query to validate the credentials and dataset existence before saving.
-- **Backend Data Ingestion Tasks (Node.js + Express + TypeScript + Supabase)**:
+- **Backend Data Ingestion Tasks (Node.js + Express + TypeScript + MongoDB Atlas)**:
   - **Microservice Architecture**: Build a dedicated backend service using **Node.js, Express.js, and TypeScript** for robust, strongly-typed data processing.
-  - **Secure Vault**: Encrypt and store the Service Account JSON keys in a secure table in **Supabase (PostgreSQL)**.
-  - **Data Worker/CronJob**: A scheduled Node.js worker (e.g., using `node-cron`) will run daily/hourly.
+  - **Secure Vault**: Encrypt and store the Service Account JSON keys in a secure collection in **MongoDB Atlas**.
+  - **Data Worker/CronJob**: A scheduled Node.js worker (using `node-cron`) or dedicated API endpoint triggered externally.
   - **SQL Aggregation (BigQuery)**: The Express backend will use the `@google-cloud/bigquery` client to execute standard SQL queries against the BigQuery export table to fetch costs, grouping the data to map exactly to the GCP hierarchy:
     - **Level 1**: Billing Account ID
     - **Level 2**: Project ID / Project Name
     - **Level 3**: Service Description (e.g., "Cloud Spanner", "Vertex AI")
     - **Level 4**: SKU / Resource Description (e.g., "Spanner Database Storage", "Compute Engine N1 Core")
-  - **Database Sync (Supabase SQL)**: The aggregated hierarchical data will be saved into **Supabase (PostgreSQL)**. Using foreign keys, we will map Projects to Billing Accounts, and Services/Resources to Projects, ensuring fast, relational data retrieval.
-- **API Development**: The strongly-typed Express backend will serve REST endpoints for the Next.js frontend to securely fetch this hierarchical data. The frontend can then allow users to drill down from Client -> Project Cost -> Service Cost -> Resource Cost.
+  - **Database Sync (MongoDB Atlas)**: The aggregated hierarchical data will be saved into **MongoDB Atlas** using structured documents. Each document groups cost arrays recursively (Projects -> Services -> Resources) ensuring fast, hierarchical data retrieval suitable for modern NoSQL architectures.
+- **API Development**: The strongly-typed Express backend will serve REST endpoints (`/api/billing`) for the Next.js frontend to securely fetch this hierarchical data. The frontend can then allow users to drill down from Client -> Project Cost -> Service Cost -> Resource Cost.

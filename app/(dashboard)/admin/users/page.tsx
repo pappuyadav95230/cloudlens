@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/app/providers/AuthProvider";
 import { 
     Shield, 
@@ -212,8 +212,8 @@ export default function AdminUsersPage() {
                                     </td>
                                 </tr>
                             ) : filteredUsers.map((user) => (
-                                <>
-                                    <tr key={user.uid} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                <React.Fragment key={user.uid}>
+                                    <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center overflow-hidden flex-shrink-0">
@@ -267,7 +267,7 @@ export default function AdminUsersPage() {
                                     </tr>
                                     {/* Expanded Permissions Row */}
                                     {expandedUser === user.uid && (
-                                        <tr key={`${user.uid}-perms`} className="bg-slate-50/50 dark:bg-slate-800/20">
+                                        <tr className="bg-slate-50/50 dark:bg-slate-800/20">
                                             <td colSpan={5} className="px-6 py-4">
                                                 <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                                                     Platform Permissions for {user.displayName || user.email}
@@ -303,7 +303,7 @@ export default function AdminUsersPage() {
                                             </td>
                                         </tr>
                                     )}
-                                </>
+                                </React.Fragment>
                             ))}
                         </tbody>
                     </table>

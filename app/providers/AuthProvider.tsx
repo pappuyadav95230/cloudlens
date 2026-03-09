@@ -18,17 +18,46 @@ interface AuthContextType {
     signInWithEmail: (email: string, password: string) => Promise<void>;
     signUpWithEmail: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
+    dbUser: any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [dbUser, setDbUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             setUser(firebaseUser);
+            if (firebaseUser) {
+                // Sync with MongoDB (silently fails if backend is down)
+                try {
+                    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                    const response = await fetch(`${apiUrl}/api/users/sync`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            uid: firebaseUser.uid,
+                            email: firebaseUser.email,
+                            displayName: firebaseUser.displayName,
+                            photoURL: firebaseUser.photoURL,
+                        }),
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setDbUser(data.user);
+                    } else {
+                        console.warn("User sync returned non-OK status:", response.status);
+                    }
+                } catch {
+                    // Backend unavailable — app continues working without DB sync
+                    console.warn("Backend unavailable — user sync skipped.");
+                }
+            } else {
+                setDbUser(null);
+            }
             setLoading(false);
         });
         return unsubscribe;
@@ -52,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider
-            value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, logout }}
+            value={{ user, dbUser, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, logout }}
         >
             {children}
         </AuthContext.Provider>

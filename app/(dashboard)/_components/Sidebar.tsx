@@ -12,6 +12,7 @@ import {
     ChevronRight,
     Sun,
     Moon,
+    Shield,
 } from "lucide-react";
 import CloudLensLogo from "@/app/(public)/_components/CloudLensLogo";
 import { useTheme } from "@/app/providers/ThemeProvider";
@@ -30,7 +31,7 @@ export default function Sidebar() {
     const pathname = usePathname();
     const { collapsed, toggle } = useSidebar();
     const { theme, toggleTheme } = useTheme();
-    const { user } = useAuth();
+    const { user, dbUser } = useAuth();
 
     const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
     const initials = displayName
@@ -91,6 +92,21 @@ export default function Sidebar() {
                             </li>
                         );
                     })}
+                    {dbUser?.role === 'admin' && (
+                        <li>
+                            <Link
+                                href="/userDashboard/admin/users"
+                                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === "/userDashboard/admin/users"
+                                    ? "bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400"
+                                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
+                                    }`}
+                                title={collapsed ? "Admin" : undefined}
+                            >
+                                <Shield size={18} className="flex-shrink-0" />
+                                {!collapsed && <span>Admin</span>}
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </nav>
 

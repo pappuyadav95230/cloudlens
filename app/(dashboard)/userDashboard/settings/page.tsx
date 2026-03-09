@@ -16,6 +16,7 @@ import {
     Table,
     Activity
 } from "lucide-react";
+import { SiGooglecloud, SiAmazonwebservices } from "react-icons/si";
 import { auth } from "@/lib/firebase"; // Assuming firebase is initialized here
 
 export default function SettingsPage() {
@@ -308,14 +309,8 @@ export default function SettingsPage() {
                                 
                                 <div className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200 dark:bg-[#0f172a] dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-800 transition-all duration-300 gap-4">
                                     <div className="flex items-start sm:items-center gap-4">
-                                        <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                                            {/* Minimalist GCP Logo representation */}
-                                            <div className="flex gap-0.5">
-                                                <span className="w-1.5 h-4 bg-red-500 rounded-full rotate-12"></span>
-                                                <span className="w-1.5 h-6 bg-blue-500 rounded-full -mt-1 hover:animate-pulse"></span>
-                                                <span className="w-1.5 h-4 bg-yellow-500 rounded-full -rotate-12"></span>
-                                                <span className="w-1.5 h-5 bg-green-500 rounded-full ml-0.5 -mt-1"></span>
-                                            </div>
+                                        <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-[#4285F4]">
+                                            <SiGooglecloud size={26} />
                                         </div>
                                         <div>
                                             <p className="font-semibold text-slate-900 dark:text-white">Google Cloud Platform</p>
@@ -336,9 +331,8 @@ export default function SettingsPage() {
                                 
                                 <div className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200 dark:bg-[#0f172a] dark:border-slate-800 hover:border-orange-300 dark:hover:border-orange-800 transition-all duration-300 gap-4 opacity-70">
                                     <div className="flex items-start sm:items-center gap-4">
-                                        <div className="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
-                                            {/* Minimalist AWS text */}
-                                            <span className="font-black text-orange-500 tracking-tighter">aws</span>
+                                        <div className="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0 text-[#FF9900]">
+                                            <SiAmazonwebservices size={28} />
                                         </div>
                                         <div>
                                             <p className="font-semibold text-slate-900 dark:text-white">Amazon Web Services</p>

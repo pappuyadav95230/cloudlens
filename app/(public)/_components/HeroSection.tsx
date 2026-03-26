@@ -53,7 +53,7 @@ export default function HeroSection() {
       <div className="flex-1 flex flex-col justify-center items-center text-center px-6 pt-24">
         <h1
           ref={headingRef}
-          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight text-slate-900 dark:text-white"
+          className="text-4xl sm:text-6xl lg:text-8xl font-extrabold leading-tight text-slate-900 dark:text-white"
           style={{ opacity: 0 }}
         >
           See Every Dollar.

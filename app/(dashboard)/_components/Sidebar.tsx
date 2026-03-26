@@ -13,6 +13,10 @@ import {
     Sun,
     Moon,
     Shield,
+    Plug,
+    Wallet,
+    LifeBuoy,
+    Download,
 } from "lucide-react";
 import CloudLensLogo from "@/app/(public)/_components/CloudLensLogo";
 import { useTheme } from "@/app/providers/ThemeProvider";
@@ -20,11 +24,15 @@ import { useAuth } from "@/app/providers/AuthProvider";
 import { useSidebar } from "@/app/providers/SidebarContext";
 
 const userNav = [
-    { label: "Overview", href: "/userDashboard", icon: LayoutDashboard },
-    { label: "Projects", href: "/userDashboard/projects", icon: FolderKanban },
-    { label: "Billing", href: "/userDashboard/billing", icon: CreditCard },
-    { label: "Alerts", href: "/userDashboard/alerts", icon: Bell },
-    { label: "Settings", href: "/userDashboard/settings", icon: Settings },
+    { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
+    { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
+    { label: "Cloud Costs", href: "/dashboard/billing", icon: CreditCard },
+    { label: "Reports", href: "/dashboard/reports", icon: Download },
+    { label: "Alerts", href: "/dashboard/alerts", icon: Bell },
+    { label: "Integrations", href: "/dashboard/integrations", icon: Plug },
+    { label: "Wallet & Plans", href: "/dashboard/wallet", icon: Wallet },
+    { label: "Help & Support", href: "/dashboard/support", icon: LifeBuoy },
+    { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -81,7 +89,7 @@ export default function Sidebar() {
                                 <Link
                                     href={item.href}
                                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive
-                                        ? "bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400"
+                                        ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md shadow-indigo-500/20"
                                         : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                                         }`}
                                     title={collapsed ? item.label : undefined}
@@ -95,8 +103,8 @@ export default function Sidebar() {
                     {dbUser?.role === 'admin' && (
                         <li>
                             <Link
-                                href="/userDashboard/admin/users"
-                                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === "/userDashboard/admin/users"
+                                href="/admin/users"
+                                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === "/admin/users"
                                     ? "bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400"
                                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                                     }`}

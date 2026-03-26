@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from './firebase';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
@@ -7,6 +8,17 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+});
+
+api.interceptors.request.use(async (config) => {
+    // If the user is logged in, attach their Firebase ID token
+    if (auth.currentUser) {
+        const token = await auth.currentUser.getIdToken();
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 // ─── Settings / Cloud Accounts ───

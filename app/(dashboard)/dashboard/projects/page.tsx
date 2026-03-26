@@ -18,15 +18,22 @@ const providerColors: Record<string, string> = {
 export default function ProjectsPage() {
     return (
         <div className="space-y-6 max-w-7xl">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Projects</h1>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">All connected cloud projects and their spending</p>
+            {/* Hero Header Card */}
+            <div className="relative overflow-hidden px-8 py-8 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-600 dark:to-purple-900 border border-indigo-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4 text-white shadow-lg shadow-indigo-500/20 rounded-2xl">
+                <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none transform translate-x-2 -translate-y-4">
+                    <Cloud size={130} />
                 </div>
-                <button className="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors">
-                    <Cloud size={16} />
-                    Connect Project
-                </button>
+                <div className="relative z-10 max-w-2xl">
+                    <h1 className="text-3xl font-bold tracking-tight">Active Cloud Projects</h1>
+                    <p className="text-sm text-indigo-100 mt-2 font-medium leading-relaxed">
+                        Monitor, govern, and drill into all your synchronized GCP and AWS cloud environments from a single unified control plane.
+                    </p>
+                </div>
+                <div className="relative z-10 flex items-center gap-2 shrink-0 mt-4 md:mt-0">
+                    <button className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-bold flex items-center gap-2 transition-all shadow-md backdrop-blur-md active:scale-95">
+                        <Cloud size={18} /> Connect Project
+                    </button>
+                </div>
             </div>
 
             {/* Projects table */}
@@ -81,7 +88,7 @@ export default function ProjectsPage() {
                                         <td className="px-5 py-4 text-xs text-slate-400 dark:text-slate-500">{p.lastUpdated}</td>
                                         <td className="px-5 py-4 text-right">
                                             <Link
-                                                href={`/userDashboard/projects/${p.id}`}
+                                                href={`/dashboard/projects/${p.id}`}
                                                 className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition-colors"
                                             >
                                                 <ExternalLink size={16} />

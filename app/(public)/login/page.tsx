@@ -18,7 +18,7 @@ export default function LoginPage() {
     // If already authenticated, redirect to dashboard
     useEffect(() => {
         if (!loading && user) {
-            router.push("/userDashboard");
+            router.push("/dashboard");
         }
     }, [user, loading, router]);
 
@@ -27,7 +27,7 @@ export default function LoginPage() {
         setBusy(true);
         try {
             await signInWithGoogle();
-            router.push("/userDashboard");
+            router.push("/dashboard");
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : "Google sign-in failed. Please try again.";
             setError(message);

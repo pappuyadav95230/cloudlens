@@ -6,10 +6,14 @@ import {
     Shield,
     Users,
     BarChart3,
+    CreditCard,
+    Tag,
     ChevronLeft,
     ChevronRight,
     Sun,
     Moon,
+    TerminalSquare,
+    LifeBuoy,
 } from "lucide-react";
 import CloudLensLogo from "@/app/(public)/_components/CloudLensLogo";
 import { useTheme } from "@/app/providers/ThemeProvider";
@@ -17,9 +21,13 @@ import { useAuth } from "@/app/providers/AuthProvider";
 import { useSidebar } from "@/app/providers/SidebarContext";
 
 const adminNav = [
-    { label: "Admin Overview", href: "/adminDashboard", icon: Shield },
-    { label: "Users", href: "/adminDashboard/users", icon: Users },
-    { label: "Clients", href: "/adminDashboard/clients", icon: BarChart3 },
+    { label: "Admin Overview", href: "/admin", icon: Shield },
+    { label: "Users", href: "/admin/users", icon: Users },
+    { label: "Client Projects", href: "/admin/projects", icon: BarChart3 },
+    { label: "Billing Records", href: "/admin/billing", icon: CreditCard },
+    { label: "Coupons", href: "/admin/coupons", icon: Tag },
+    { label: "Support Tickets", href: "/admin/support", icon: LifeBuoy },
+    { label: "System Logs", href: "/admin/logs", icon: TerminalSquare },
 ];
 
 export default function AdminSidebar() {
@@ -76,7 +84,7 @@ export default function AdminSidebar() {
                                 <Link
                                     href={item.href}
                                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive
-                                        ? "bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400"
+                                        ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md shadow-indigo-500/20"
                                         : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                                         }`}
                                     title={collapsed ? item.label : undefined}
@@ -94,7 +102,7 @@ export default function AdminSidebar() {
                     <>
                         <div className="my-4 mx-3 h-px bg-slate-200 dark:bg-slate-700" />
                         <Link
-                            href="/userDashboard"
+                            href="/dashboard"
                             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
                         >
                             <BarChart3 size={18} className="flex-shrink-0" />

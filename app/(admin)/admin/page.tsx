@@ -68,7 +68,7 @@ export default function AdminDashboardPage() {
             <div className="bg-white dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-base font-semibold text-slate-900 dark:text-white">Recent Sign-ups</h3>
-                    <a href="/adminDashboard/users" className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-medium transition-colors">
+                    <a href="/admin/users" className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 font-medium transition-colors">
                         View All →
                     </a>
                 </div>
